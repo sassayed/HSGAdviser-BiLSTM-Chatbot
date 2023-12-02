@@ -1,8 +1,23 @@
-
+# create an embedding for the input text by using a function ( layer) called embed
+# It's a numerical representation of input data for captureing semantic relationships and patterns from data
 enc_embed = embed(enc_inp)
-#  BiLSTM layer 
-enc_lstm = Bidirectional(LSTM(400, return_sequences=True, return_state=True))
+#  Building the BiLSTM layer by using the Embedded representation (vectors)
+# 1: Encoder Part: (BiLSTM Layer )
+enc_lstm = Bidirectional(LSTM(400, return_sequences=True, return_state=True)) 
 enc_op, forward_h, forward_c,backward_h,backward_c = enc_lstm(enc_embed)
 h = Concatenate()([forward_h, backward_h])
 c = Concatenate()([forward_c, backward_c])
 enc_states = [h, c]
+# 2: Decoder Part: (LSTM Layer )
+dec_embed = embed(dec_inp)
+dec_lstm = LSTM(400*2, return_sequences=True, return_state=True)
+dec_op, _, _ = dec_lstm(dec_embed, initial_state=enc_states)
+# Dense Layer (Output)- 
+#This layer is a fully connected layer in a neural network.each neuron is connected to every neuron in the previous layer
+dense = Dense(VOCAB_SIZE, activation='softmax')
+# Softmax used to predict the probability of the answer
+# A dense layer applied to the decoder output (This is an important step for building the model)
+dense_op = dense(dec_op)
+# Connecting the model with  two input layers (enc_inp and dec_inp) and one output layer (dense_op). 
+model = Model([enc_inp, dec_inp], dense_op)  # connecting the encoder and decoder parts
+# The inputs represent the encoder and decoder in a sequence-to-sequence mode
