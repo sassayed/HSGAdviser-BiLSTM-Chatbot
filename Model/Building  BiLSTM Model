@@ -1,1 +1,8 @@
 
+enc_embed = embed(enc_inp)
+#  BiLSTM layer 
+enc_lstm = Bidirectional(LSTM(400, return_sequences=True, return_state=True))
+enc_op, forward_h, forward_c,backward_h,backward_c = enc_lstm(enc_embed)
+h = Concatenate()([forward_h, backward_h])
+c = Concatenate()([forward_c, backward_c])
+enc_states = [h, c]
