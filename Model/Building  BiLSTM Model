@@ -1,7 +1,1 @@
-import pandas as pd
-df = pd.read_csv(r"C:\HSGAdviser.csv", encoding_errors='ignore')
-df_data=df[["Question","Answer"]]
-# converts all DataFrame columns into a string format
-df_data["Question"]=df_data["Question"].astype(str) 
-df_data["Answer"]=df_data["Answer"].astype(str)
-# Converting the data elements of an array into a list to start preprocessing it in next step  "sorted_ques/ans = []"
+
