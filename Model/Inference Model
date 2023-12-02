@@ -1,0 +1,26 @@
+# Inference Model
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Input
+import numpy as np
+
+enc_model = Model([enc_inp], enc_states)
+from keras.preprocessing.sequence import pad_sequences
+# decoder Model
+decoder_state_input_h = Input(shape=(400*2,))
+decoder_state_input_c = Input(shape=(400*2,))
+
+decoder_states_inputs = [decoder_state_input_h, decoder_state_input_c]
+
+
+decoder_outputs, state_h, state_c = dec_lstm(dec_embed , 
+                                    initial_state=decoder_states_inputs)
+
+
+decoder_states = [state_h, state_c]
+#During inference, you would feed the input sequence through the encoder to get the initial states
+# and then iteratively generate the output sequence using the decoder states.
+dec_model = Model([dec_inp]+ decoder_states_inputs,
+                                      [decoder_outputs]+ decoder_states)
+#  The difference between training model is that
+# Training model involves using teacher forcing, where the true target sequences 
+# are fed as inputs to the decoder during training( not using decoder_states _inputs)
