@@ -1,0 +1,9 @@
+# The configuring the training process
+model.compile(loss='categorical_crossentropy',metrics=['acc'],optimizer='adam')
+# Categorical_crossentropy is often used for multi-class classification problems
+# This is the ground truth or target output that your model is trying to learn (decoder_final_output)
+model.fit([encoder_inp, decoder_inp],decoder_final_output,epochs=150)
+# The model will go through the entire dataset 150 times during training.
+# With using the "Fit" during each epoch,the model makes predictions on the input data and 
+#computes the loss (the difference between the predictions and the actual targets)
+#and then adjusts the model's weights to minimize this loss.
