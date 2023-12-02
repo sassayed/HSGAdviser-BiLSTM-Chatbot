@@ -1,0 +1,10 @@
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Dense, Embedding, LSTM, Input
+from keras.layers import LSTM,Bidirectional,Input,Concatenate
+enc_inp = Input(shape= (13, ))  # 13 feartures for input sequense
+dec_inp = Input(shape= (13, ))# 13 feartures for output sequense
+VOCAB_SIZE = len(vocab)
+embed = Embedding(VOCAB_SIZE+1, output_dim=50, 
+                  input_length=13,
+                  trainable=True                  
+                  )
